@@ -70,22 +70,26 @@
     </section>
 
     <section class="space-y-3">
-      <h2 class="text-sm font-semibold">1. Simular pago por número de cuenta</h2>
-      <p class="text-[11px] text-slate-400">Simula un cargo contra una cuenta. Se descuenta del saldo solo si el pago es aprobado.</p>
+      <h2 class="text-sm font-semibold">1. Simular pago con tarjeta Povy</h2>
+      <p class="text-[11px] text-slate-400">Simula un cargo usando la tarjeta asociada a una cuenta Povy. Se descuenta del saldo solo si el pago es aprobado.</p>
       <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3">
-        <pre id="code-http-basic" class="text-[10px] text-slate-300 overflow-x-auto"><code>POST /api/payments
+        <pre id="code-http-card" class="text-[10px] text-slate-300 overflow-x-auto"><code>POST /api/payments/card
 Body: {
-  "accountNumber": "001-00000001",
+  "cardNumber": "YOUR_POVY_CARD_NUMBER",
+  "expMonth": "MM",          // por ejemplo "12"
+  "expYear": "YY",           // por ejemplo "28"
+  "cvv": "CVV",             // por ejemplo "123"
   "amount": 49.99,
-  "currency": "USD",        // Si lo omites, el backend usa USD por defecto
-  "merchantName": "Mi tienda de pruebas" // Opcional, por defecto 'Povy Test'
+  "currency": "USD",        // si lo omites, el backend usa la moneda de la cuenta
+  "description": "Pedido #123",
+  "merchantName": "YOUR_MERCHANT_NAME" // opcional, por defecto 'Povy Test'
 }</code></pre>
       </div>
     </section>
 
     <section class="space-y-3">
-      <h2 class="text-sm font-semibold">2. Ejemplo listo para pegar (HTML + JS)</h2>
-      <p class="text-[11px] text-slate-400">Este snippet está pensado para que lo pegues tal cual en cualquier página HTML. Solo configura una vez la cuenta Povy y el nombre del comercio; el monto se toma automáticamente de <code>window.pedidoActual</code> (que tú actualizas en tu sistema).</p>
+      <h2 class="text-sm font-semibold">2. Ejemplo listo para pegar (HTML + JS) - Pago con tarjeta</h2>
+      <p class="text-[11px] text-slate-400">Este snippet está pensado para que lo pegues tal cual en cualquier página HTML. Solo configura una vez la tarjeta Povy y el nombre del comercio; el monto se toma automáticamente de <code>window.pedidoActual</code> (que tú actualizas en tu sistema).</p>
 
       <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3 space-y-2">
         <div class="flex items-center justify-between gap-2">
@@ -101,8 +105,11 @@ Body: {
 // ===========================
 const POVY_CONFIG = {
   BASE_URL: 'https://backend-povy.onrender.com', // o 'http://localhost:4000' en local
-  ACCOUNT_NUMBER: '001-00000001',                // tu cuenta Povy
-  MERCHANT_NAME: 'MiTiendaWeb'                  // nombre fijo de esta página
+  CARD_NUMBER: 'YOUR_POVY_CARD_NUMBER',         // número de tarjeta Povy (sandbox)
+  CARD_EXP_MONTH: 'MM',                         // por ejemplo '12'
+  CARD_EXP_YEAR: 'YY',                          // por ejemplo '28'
+  CARD_CVV: 'CVV',                              // por ejemplo '123'
+  MERCHANT_NAME: 'YOUR_MERCHANT_NAME'           // nombre fijo de esta página/tienda
 };
 
 // ===========================
@@ -129,14 +136,18 @@ async function pagarConPovy() {
   }
 
   const payload = {
-    accountNumber: POVY_CONFIG.ACCOUNT_NUMBER,
+    cardNumber: POVY_CONFIG.CARD_NUMBER,
+    expMonth: POVY_CONFIG.CARD_EXP_MONTH,
+    expYear: POVY_CONFIG.CARD_EXP_YEAR,
+    cvv: POVY_CONFIG.CARD_CVV,
     amount,
     currency,
+    description: 'Pedido ' + orderId,
     merchantName: POVY_CONFIG.MERCHANT_NAME
   };
 
   try {
-    const resp = await fetch(`${POVY_CONFIG.BASE_URL}/api/payments`, {
+    const resp = await fetch(`${POVY_CONFIG.BASE_URL}/api/payments/card`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -167,7 +178,7 @@ document.addEventListener('click', (e) =&gt; {
 
     <section class="space-y-3">
       <h2 class="text-sm font-semibold">3. Ejemplos por lenguaje</h2>
-      <p class="text-[11px] text-slate-400">Copia y pega estos snippets en tus proyectos. Solo ajusta la <code>BASE_URL</code>, el <code>accountNumber</code> y el <code>merchantName</code> según tu integración.</p>
+      <p class="text-[11px] text-slate-400">Copia y pega estos snippets en tus proyectos. Solo ajusta la <code>BASE_URL</code>, los datos de la tarjeta Povy y el <code>merchantName</code> según tu integración. No incluyas datos reales de tarjetas; usa únicamente las tarjetas de sandbox de Povy.</p>
 
       <div class="grid md:grid-cols-2 gap-3">
         <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-3 space-y-2">
@@ -177,14 +188,18 @@ document.addEventListener('click', (e) =&gt; {
           </div>
           <pre id="code-js-browser" class="text-[10px] text-slate-300 overflow-x-auto"><code>const BASE_URL = 'https://backend-povy.onrender.com';
 
-fetch(`${BASE_URL}/api/payments`, {
+fetch(`${BASE_URL}/api/payments/card`, {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
-    accountNumber: '001-00000001',
+    cardNumber: 'YOUR_POVY_CARD_NUMBER',
+    expMonth: 'MM',
+    expYear: 'YY',
+    cvv: 'CVV',
     amount: 49.99,
-    currency: 'USD', // opcional
-    merchantName: 'MiTiendaWeb'
+    currency: 'USD', // opcional, se usa la moneda de la cuenta si se omite
+    description: 'Pedido #123',
+    merchantName: 'YOUR_MERCHANT_NAME'
   })
 })
   .then(r =&gt; r.json())
@@ -197,13 +212,17 @@ fetch(`${BASE_URL}/api/payments`, {
             <p class="text-[11px] font-semibold text-slate-200">cURL (terminal)</p>
             <button type="button" data-copy-target="code-curl" class="text-[10px] px-2 py-1 rounded-md border border-slate-700 text-slate-200 hover:bg-slate-800">Copiar</button>
           </div>
-          <pre id="code-curl" class="text-[10px] text-slate-300 overflow-x-auto"><code>curl -X POST https://backend-povy.onrender.com/api/payments \
+          <pre id="code-curl" class="text-[10px] text-slate-300 overflow-x-auto"><code>curl -X POST https://backend-povy.onrender.com/api/payments/card \
   -H "Content-Type: application/json" \
   -d '{
-    "accountNumber": "001-00000001",
+    "cardNumber": "YOUR_POVY_CARD_NUMBER",
+    "expMonth": "MM",
+    "expYear": "YY",
+    "cvv": "CVV",
     "amount": 49.99,
     "currency": "USD",
-    "merchantName": "MiTiendaWeb"
+    "description": "Pedido #123",
+    "merchantName": "YOUR_MERCHANT_NAME"
   }'</code></pre>
         </div>
 
@@ -217,14 +236,18 @@ fetch(`${BASE_URL}/api/payments`, {
 const BASE_URL = 'https://backend-povy.onrender.com';
 
 async function pagarConPovy() {
-  const resp = await fetch(`${BASE_URL}/api/payments`, {
+  const resp = await fetch(`${BASE_URL}/api/payments/card`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      accountNumber: '001-00000001',
+      cardNumber: 'YOUR_POVY_CARD_NUMBER',
+      expMonth: 'MM',
+      expYear: 'YY',
+      cvv: 'CVV',
       amount: 49.99,
       currency: 'USD',
-      merchantName: 'MiApiNode'
+      description: 'Pedido #123',
+      merchantName: 'YOUR_MERCHANT_NAME'
     })
   });
 
@@ -245,14 +268,18 @@ pagarConPovy().catch(console.error);</code></pre>
 BASE_URL = 'https://backend-povy.onrender.com'
 
 payload = {
-    "accountNumber": "001-00000001",
+    "cardNumber": "YOUR_POVY_CARD_NUMBER",
+    "expMonth": "MM",
+    "expYear": "YY",
+    "cvv": "CVV",
     "amount": 49.99,
     "currency": "USD",
-    "merchantName": "MiServicioPython",
+    "description": "Pedido #123",
+    "merchantName": "YOUR_MERCHANT_NAME",
 }
 
 resp = requests.post(
-    f"{BASE_URL}/api/payments",
+    f"{BASE_URL}/api/payments/card",
     json=payload,
     timeout=10,
 )
