@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Povy - Cuentas de prueba</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#22c55e',
+            primaryDark: '#16a34a',
+            bg: '#020617',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at top, #1f2937 0, #020617 45%, #000 100%);
+    }
+  </style>
+ </head>
+<body class="min-h-screen flex flex-col text-slate-100">
+  <header class="relative z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2 w-72">
+        <div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-emerald-400 flex items-center justify-center text-xs font-bold">
+          PV
+        </div>
+        <div>
+          <p class="text-sm font-semibold leading-tight">Povy</p>
+          <p class="text-[11px] text-slate-400 leading-tight">Cuentas de prueba</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-5 text-xs text-slate-300">
+        <a href="../index.html" class="hover:text-emerald-300">Inicio</a>
+        <a href="accounts.html" class="text-emerald-300">Cuentas</a>
+        <a href="payments.html" class="hover:text-emerald-300">Pagos</a>
+        <a href="docs.html" class="hover:text-emerald-300">Docs API</a>
+      </nav>
+      <button id="nav-toggle" class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-full bg-primary hover:bg-primaryDark text-slate-950 text-sm font-bold" aria-label="Abrir navegación">
+        ☰
+      </button>
+    </div>
+    <div id="mobile-nav" class="md:hidden hidden absolute left-0 right-0 top-full border-t border-slate-800/80 bg-slate-950/95 z-40">
+      <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1.5 text-[11px] text-slate-300">
+        <a href="../index.html" class="py-1">Inicio</a>
+        <a href="accounts.html" class="py-1">Cuentas</a>
+        <a href="payments.html" class="py-1">Pagos</a>
+        <a href="docs.html" class="py-1">Docs API</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl mx-auto px-4 py-8 space-y-6">
+    <section class="space-y-4">
+      <div class="flex items-center justify-between gap-2">
+        <div>
+          <h1 class="text-sm font-semibold">Cuentas de prueba Povy</h1>
+          <p class="text-[11px] text-slate-400">Povy genera el número de cuenta y la tarjeta asociada. Tú solo usas el número de cuenta para probar tus pagos.</p>
+        </div>
+        <button id="btn-create-account" class="px-3 py-1.5 rounded-md bg-primary hover:bg-primaryDark text-slate-950 text-xs font-semibold">Crear cuenta</button>
+      </div>
+      <div class="grid sm:grid-cols-[1.2fr,0.8fr] gap-3 text-[11px]">
+        <div>
+          <label class="block text-slate-300 mb-1">Nombre del titular (opcional)</label>
+          <input id="ownerName" type="text" maxlength="40" placeholder="Ej: John Doe" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-[11px] outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
+        </div>
+        <p class="text-slate-500 self-end">Si no especificas un nombre, se generará uno de prueba automáticamente.</p>
+      </div>
+      <p id="accounts-empty" class="text-[11px] text-slate-500">Aún no hay cuentas de prueba creadas.</p>
+      <div id="accounts-list" class="grid gap-3 sm:grid-cols-2 text-xs"></div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/80 mt-6">
+    <div class="max-w-6xl mx-auto px-4 py-4 text-[11px] text-slate-500 flex items-center justify-between">
+      <span>Povy Sandbox · Solo para pruebas de desarrollo</span>
+      <span id="year"></span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

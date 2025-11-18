@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Povy - Pasarela de pruebas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#22c55e',
+            primaryDark: '#16a34a',
+            bg: '#020617',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at top, #1f2937 0, #020617 45%, #000 100%);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col text-slate-100">
+  <header class="relative z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2 w-72">
+        <div
+          class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-emerald-400 flex items-center justify-center text-xs font-bold">
+          PV
+        </div>
+        <div>
+          <p class="text-sm font-semibold leading-tight">Povy</p>
+          <p class="text-[11px] text-slate-400 leading-tight">Banco de pruebas con dinero ficticio</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-5 text-xs text-slate-300">
+        <a href="index.html" class="hover:text-emerald-300">Inicio</a>
+        <a href="pages/accounts.html" class="hover:text-emerald-300">Cuentas</a>
+        <a href="pages/payments.html" class="hover:text-emerald-300">Pagos</a>
+        <a href="pages/docs.html" class="hover:text-emerald-300">Docs API</a>
+      </nav>
+      <button id="nav-toggle"
+        class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-full bg-primary hover:bg-primaryDark text-slate-950 text-sm font-bold"
+        aria-label="Abrir navegación">
+        ☰
+      </button>
+    </div>
+    <div id="mobile-nav"
+      class="md:hidden hidden absolute left-0 right-0 top-full border-t border-slate-800/80 bg-slate-950/95 z-40">
+      <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1.5 text-[11px] text-slate-300">
+        <a href="index.html" class="py-1">Inicio</a>
+        <a href="pages/accounts.html" class="py-1">Cuentas</a>
+        <a href="pages/payments.html" class="py-1">Pagos</a>
+        <a href="pages/docs.html" class="py-1">Docs API</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl mx-auto px-4 py-12 space-y-14">
+    <!-- HERO PRINCIPAL -->
+    <section class="grid lg:grid-cols-[1.4fr,1fr] gap-10 items-center">
+      <div class="space-y-6">
+        <p class="text-[11px] uppercase tracking-[0.18em] text-emerald-300/90">Sandbox de pasarela de pago</p>
+        <h1 class="text-3xl md:text-4xl font-semibold leading-tight">
+          Prueba tus flujos de pago
+          <span class="text-emerald-300">sin tocar dinero real</span>.
+        </h1>
+        <p class="text-sm md:text-[13px] text-slate-300 max-w-xl">
+          Povy genera cuentas bancarias y tarjetas de prueba con saldo ficticio. Úsalo como si fuera una pasarela real
+          para validar tus tiendas en línea, landings o proyectos personales sin riesgo.
+        </p>
+        <div class="grid sm:grid-cols-3 gap-3 text-[11px]">
+          <div class="h-full rounded-lg border border-slate-800 bg-slate-950/80 p-3 flex items-start gap-2">
+            <div class="h-7 w-7 rounded-lg bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center text-[11px] text-emerald-300 flex-shrink-0">
+              1
+            </div>
+            <p class="text-slate-300">Crea una cuenta Povy con saldo ficticio.</p>
+          </div>
+          <div class="h-full rounded-lg border border-slate-800 bg-slate-950/80 p-3 flex items-start gap-2">
+            <div class="h-7 w-7 rounded-lg bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center text-[11px] text-emerald-300 flex-shrink-0">
+              2
+            </div>
+            <p class="text-slate-300">Copia el número de cuenta o tarjeta.</p>
+          </div>
+          <div class="h-full rounded-lg border border-slate-800 bg-slate-950/80 p-3 flex items-start gap-2">
+            <div class="h-7 w-7 rounded-lg bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center text-[11px] text-emerald-300 flex-shrink-0">
+              3
+            </div>
+            <p class="text-slate-300">Pega el snippet en tu página y prueba cobros falsos.</p>
+          </div>
+        </div>
+        <div class="flex flex-wrap gap-3 pt-2 text-xs">
+          <a href="pages/accounts.html"
+            class="px-5 py-2.5 rounded-md bg-primary hover:bg-primaryDark text-slate-950 font-semibold text-[12px]">
+            Crear cuenta de prueba
+          </a>
+          <a href="pages/payments.html"
+            class="px-5 py-2.5 rounded-md border border-slate-700 text-slate-200 hover:border-emerald-400 text-[12px]">
+            Ir al sandbox de pagos
+          </a>
+          <a href="pages/docs.html" class="text-[11px] text-slate-400 hover:text-emerald-300">
+            Ver cómo integrar la API →
+          </a>
+        </div>
+      </div>
+
+      <!-- Tarjeta de ejemplo grande -->
+      <div class="space-y-4 text-xs text-slate-300">
+        <div class="rounded-2xl border border-slate-800 bg-slate-950/90 p-5 shadow-xl shadow-emerald-500/25">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <p class="text-[11px] text-slate-400">Cuenta de prueba</p>
+              <p class="text-sm font-semibold">001-00000001</p>
+            </div>
+            <span
+              class="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/40">Sandbox
+              activo</span>
+          </div>
+          <p class="text-[11px] text-slate-400">Saldo disponible</p>
+          <p class="text-2xl font-semibold text-emerald-300 mb-4">$10,000.00 USD</p>
+          <div class="rounded-xl bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 border border-emerald-500/40 p-4 space-y-3 relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10 pointer-events-none"
+              style="background: radial-gradient(circle at top left, #22c55e 0, transparent 60%);"></div>
+            <div class="relative flex items-center justify-between">
+              <span class="text-[10px] uppercase tracking-[0.16em] text-slate-400">Povy Sandbox</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-900/80 border border-slate-700 text-slate-200">TEST
+                CARD</span>
+            </div>
+            <div class="relative space-y-1">
+              <p class="text-[10px] text-slate-400">Tarjeta asociada</p>
+              <p class="text-sm tracking-[0.22em]">4111 1145 **** ****</p>
+            </div>
+            <div class="relative flex items-center justify-between">
+              <div>
+                <p class="text-[10px] text-slate-400">Titular</p>
+                <p class="text-[11px] text-slate-100">Usuario de prueba</p>
+              </div>
+              <div class="flex gap-4">
+                <div>
+                  <p class="text-[10px] text-slate-400">Expiración</p>
+                  <p class="text-[11px]">12/28</p>
+                </div>
+                <div>
+                  <p class="text-[10px] text-slate-400">CVV</p>
+                  <p class="text-[11px]">123</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-500 mt-2">Toda la información es ficticia y solo se usa para pruebas en tus
+            propias páginas.</p>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-slate-950/80 p-4">
+          <p class="text-[11px] text-slate-400 mb-1">Pensado para desarrolladores</p>
+          <p class="text-[11px] text-slate-400">Integra Povy con llamadas HTTP simples o copiando snippets desde la Doc.
+            Nada de SDKs pesados ni paneles complicados.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFICIOS RÁPIDOS -->
+    <section class="grid sm:grid-cols-3 gap-4 text-xs">
+      <div class="rounded-xl border border-slate-800 bg-slate-950/80 p-4">
+        <p class="text-[11px] text-slate-400">Tiempo de integración</p>
+        <p class="text-lg font-semibold text-slate-100">&lt; 10 min</p>
+        <p class="text-[11px] text-slate-500 mt-1">Pega un snippet y simula cobros falsos contra tus propias páginas.</p>
+      </div>
+      <div class="rounded-xl border border-slate-800 bg-slate-950/80 p-4">
+        <p class="text-[11px] text-slate-400">Riesgo de dinero real</p>
+        <p class="text-lg font-semibold text-emerald-300">0%</p>
+        <p class="text-[11px] text-slate-500 mt-1">Todo el saldo es ficticio. Ideal para demos, clases y desarrollo.</p>
+      </div>
+      <div class="rounded-xl border border-slate-800 bg-slate-950/80 p-4">
+        <p class="text-[11px] text-slate-400">Flujos completos</p>
+        <p class="text-lg font-semibold text-slate-100">Cuenta → Pago → Historial</p>
+        <p class="text-[11px] text-slate-500 mt-1">Crea cuentas, cobra por cuenta o tarjeta y revisa el historial en un
+          solo lugar.</p>
+      </div>
+    </section>
+
+    <!-- QUÉ PUEDES HACER CON POVY -->
+    <section class="space-y-4 text-xs">
+      <div class="flex items-center justify-between gap-2">
+        <div>
+          <h2 class="text-sm font-semibold text-slate-100">Qué puedes hacer con Povy</h2>
+          <p class="text-[11px] text-slate-400">Usa las secciones del panel para controlar todo tu banco ficticio.</p>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4">
+        <a href="pages/accounts.html"
+          class="rounded-xl border border-slate-800 bg-slate-950/80 p-4 hover:border-emerald-400/80 hover:shadow-lg hover:shadow-emerald-500/20 transition-all">
+          <p class="text-[11px] text-emerald-300 mb-1">Cuentas</p>
+          <h3 class="text-sm font-semibold mb-1">Genera cuentas de prueba</h3>
+          <p class="text-[11px] text-slate-400 mb-2">Obtén número de cuenta, tarjeta asociada y saldo inicial en segundos.
+          </p>
+          <p class="text-[10px] text-slate-500">Perfecto para emular usuarios de una tienda o suscripciones.</p>
+        </a>
+
+        <a href="pages/payments.html"
+          class="rounded-xl border border-slate-800 bg-slate-950/80 p-4 hover:border-emerald-400/80 hover:shadow-lg hover:shadow-emerald-500/20 transition-all">
+          <p class="text-[11px] text-emerald-300 mb-1">Pagos</p>
+          <h3 class="text-sm font-semibold mb-1">Simula cobros desde tus páginas</h3>
+          <p class="text-[11px] text-slate-400 mb-2">Cobra por número de cuenta o tarjeta Povy copiando los datos desde el
+            panel.</p>
+          <p class="text-[10px] text-slate-500">Reproduce flujos de checkout completos sin tocar tarjetas reales.</p>
+        </a>
+
+        <a href="pages/docs.html"
+          class="rounded-xl border border-slate-800 bg-slate-950/80 p-4 hover:border-emerald-400/80 hover:shadow-lg hover:shadow-emerald-500/20 transition-all">
+          <p class="text-[11px] text-emerald-300 mb-1">Docs API</p>
+          <h3 class="text-sm font-semibold mb-1">Snippets listos para pegar</h3>
+          <p class="text-[11px] text-slate-400 mb-2">Ejemplos en JavaScript, Node, Python y HTML+JS que se adaptan a tus
+            precios.</p>
+          <p class="text-[10px] text-slate-500">Solo cambias la URL y el número de cuenta de tu Povy y listo.</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- PASOS DE INTEGRACIÓN RÁPIDA -->
+    <section class="grid md:grid-cols-[1.1fr,0.9fr] gap-6 items-start text-xs">
+      <div class="rounded-xl border border-slate-800 bg-slate-950/80 p-4 space-y-3">
+        <p class="text-[11px] text-emerald-300 mb-1">Integración rápida</p>
+        <h3 class="text-sm font-semibold">Pega este snippet en tu página y Povy usa el total de tu pedido.</h3>
+        <p class="text-[11px] text-slate-400">Solo actualiza <code>BASE_URL</code>, la cuenta Povy y el
+          <code>merchantName</code>. El monto se toma de <code>window.pedidoActual.total</code>.</p>
+        <a href="pages/docs.html" class="inline-flex text-[11px] text-emerald-300 hover:text-emerald-200">Ver el snippet
+          completo en Docs →</a>
+      </div>
+      <div class="rounded-xl border border-slate-800 bg-slate-950/80 p-4 space-y-2">
+        <p class="text-[11px] text-slate-400">Casos de uso</p>
+        <ul class="list-disc list-inside text-[11px] text-slate-400 space-y-1">
+          <li>Tiendas en línea que quieren probar flujos de pago.</li>
+          <li>Dashboards internos que necesitan validar estados de cobro.</li>
+          <li>Proyectos escolares o portafolios con pagos ficticios.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/80 mt-6">
+    <div class="max-w-6xl mx-auto px-4 py-4 text-[11px] text-slate-500 flex items-center justify-between">
+      <span>Povy Sandbox · Solo para pruebas de desarrollo</span>
+      <span id="year"></span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

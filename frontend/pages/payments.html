@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Povy - Sandbox de pagos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#22c55e',
+            primaryDark: '#16a34a',
+            bg: '#020617',
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      background: radial-gradient(circle at top, #1f2937 0, #020617 45%, #000 100%);
+    }
+  </style>
+ </head>
+<body class="min-h-screen flex flex-col text-slate-100">
+  <header class="relative z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2 w-72">
+        <div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-emerald-400 flex items-center justify-center text-xs font-bold">
+          PV
+        </div>
+        <div>
+          <p class="text-sm font-semibold leading-tight">Povy</p>
+          <p class="text-[11px] text-slate-400 leading-tight">Sandbox de pagos</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-5 text-xs text-slate-300">
+        <a href="../index.html" class="hover:text-emerald-300">Inicio</a>
+        <a href="accounts.html" class="hover:text-emerald-300">Cuentas</a>
+        <a href="payments.html" class="text-emerald-300">Pagos</a>
+        <a href="docs.html" class="hover:text-emerald-300">Docs API</a>
+      </nav>
+      <button id="nav-toggle" class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-full bg-primary hover:bg-primaryDark text-slate-950 text-sm font-bold" aria-label="Abrir navegación">
+        ☰
+      </button>
+    </div>
+    <div id="mobile-nav" class="md:hidden hidden absolute left-0 right-0 top-full border-t border-slate-800/80 bg-slate-950/95 z-40">
+      <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1.5 text-[11px] text-slate-300">
+        <a href="../index.html" class="py-1">Inicio</a>
+        <a href="accounts.html" class="py-1">Cuentas</a>
+        <a href="payments.html" class="py-1">Pagos</a>
+        <a href="docs.html" class="py-1">Docs API</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-5xl mx-auto px-4 py-8">
+    <section class="grid md:grid-cols-[1.1fr,0.9fr] gap-6 items-start">
+      <div class="space-y-4">
+        <div class="space-y-3">
+          <h1 class="text-sm font-semibold">Sandbox de pagos Povy</h1>
+          <p class="text-[11px] text-slate-400">Simula cobros de prueba contra tus cuentas Povy, ya sea por <span class="font-semibold text-emerald-300">número de cuenta</span> o usando la <span class="font-semibold text-emerald-300">tarjeta asociada</span>.</p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-800 bg-slate-950/70 shadow-lg shadow-emerald-500/10 text-sm">
+          <p class="text-[11px] text-slate-400 mb-2 uppercase tracking-[0.12em]">Pago por número de cuenta</p>
+          <form id="payment-form" class="space-y-3">
+            <div>
+              <label class="block text-slate-300 mb-1 text-xs">Número de cuenta Povy</label>
+              <input id="payAccountNumber" type="text" placeholder="001-00000001" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-xs outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
+              <p class="text-[10px] text-slate-500 mt-1">Copia el número desde una cuenta creada en Povy.</p>
+            </div>
+
+            <div class="grid grid-cols-[1.2fr,0.8fr] gap-3">
+              <div>
+                <label class="block text-slate-300 mb-1 text-xs">Monto</label>
+                <input id="payAmount" type="number" step="0.01" placeholder="499.99" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-xs outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
+              </div>
+              <div>
+                <label class="block text-slate-300 mb-1 text-xs">Moneda</label>
+                <select id="payCurrency" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-xs outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400">
+                  <option value="USD">USD</option>
+                  <option value="MXN">MXN</option>
+                  <option value="JPY">JPY</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-slate-300 mb-1 text-xs">Descripción</label>
+              <input id="payDescription" type="text" placeholder="Compra de prueba" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-xs outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
+            </div>
+
+            <button type="submit" id="btn-pay" class="mt-2 inline-flex items-center justify-center w-full rounded-md bg-primary hover:bg-primaryDark text-slate-950 font-semibold py-2 text-xs transition-colors">
+              Procesar pago de prueba por cuenta
+            </button>
+            <p id="form-error" class="text-[11px] text-red-400 mt-1 hidden"></p>
+          </form>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-3 text-xs text-slate-300">
+          <p class="text-[11px] text-slate-400 uppercase tracking-[0.12em] mb-1">Pago con tarjeta Povy</p>
+          <p class="text-[11px] text-slate-400">Usa la tarjeta asociada a tu cuenta (la ves en el detalle de la cuenta). Todos los datos son ficticios y solo sirven para pruebas.</p>
+
+          <form id="card-payment-form" class="space-y-2 mt-1">
+            <div>
+              <label class="block text-slate-300 mb-1 text-xs">Número de tarjeta</label>
+              <input id="cardNumber" type="text" inputmode="numeric" autocomplete="off" placeholder="4111 1111 1111 1111" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-xs tracking-[0.22em] outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
+            </div>
+
+            <div class="grid grid-cols-3 gap-2">
+              <div>
+                <label class="block text-slate-300 mb-1 text-xs">Mes</label>
+                <input id="cardExpMonth" type="text" inputmode="numeric" autocomplete="off" placeholder="12" class="w-full rounded-md bg-slate-900 border border-slate-700 px-2 py-2 text-xs text-center outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
+              </div>
+              <div>
+                <label class="block text-slate-300 mb-1 text-xs">Año</label>
+                <input id="cardExpYear" type="text" inputmode="numeric" autocomplete="off" placeholder="28" class="w-full rounded-md bg-slate-900 border border-slate-700 px-2 py-2 text-xs text-center outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
+              </div>
+              <div>
+                <label class="block text-slate-300 mb-1 text-xs">CVV</label>
+                <input id="cardCvv" type="text" inputmode="numeric" autocomplete="off" placeholder="106" class="w-full rounded-md bg-slate-900 border border-slate-700 px-2 py-2 text-xs text-center outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-[1.2fr,0.8fr] gap-2">
+              <div>
+                <label class="block text-slate-300 mb-1 text-xs">Monto</label>
+                <input id="cardPayAmount" type="number" step="0.01" placeholder="199.99" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-xs outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
+              </div>
+              <div>
+                <label class="block text-slate-300 mb-1 text-xs">Moneda</label>
+                <select id="cardPayCurrency" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-xs outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400">
+                  <option value="USD">USD</option>
+                  <option value="MXN">MXN</option>
+                  <option value="JPY">JPY</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-slate-300 mb-1 text-xs">Descripción</label>
+              <input id="cardPayDescription" type="text" placeholder="Pago de prueba con tarjeta" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-xs outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
+            </div>
+
+            <button type="submit" id="btn-card-pay" class="mt-2 inline-flex items-center justify-center w-full rounded-md bg-slate-800 hover:bg-slate-700 text-slate-50 font-semibold py-2 text-xs transition-colors">
+              Procesar pago con tarjeta
+            </button>
+            <p id="card-form-error" class="text-[11px] text-red-400 mt-1 hidden"></p>
+          </form>
+
+          <div class="rounded-xl bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 border border-emerald-500/40 p-4 space-y-4 relative overflow-hidden mt-3">
+            <div class="absolute inset-0 opacity-10 pointer-events-none" style="background: radial-gradient(circle at top left, #22c55e 0, transparent 60%);"></div>
+            <div class="relative flex items-center justify-between">
+              <span class="text-[10px] uppercase tracking-[0.16em] text-slate-400">Povy Sandbox</span>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-900/70 border border-slate-700 text-slate-200">TEST CARD</span>
+            </div>
+            <div class="relative space-y-1">
+              <p class="text-[10px] text-slate-400">Número de tarjeta</p>
+              <p id="pay-card-number" class="text-sm tracking-[0.22em]">---- ---- ---- ----</p>
+            </div>
+            <div class="relative flex items-center justify-between">
+              <div>
+                <p class="text-[10px] text-slate-400">Expiración</p>
+                <p id="pay-card-exp" class="text-[11px]">--/--</p>
+              </div>
+              <div class="text-right">
+                <p class="text-[10px] text-slate-400">Modo</p>
+                <p class="text-[11px] text-slate-200">Pago de prueba</p>
+              </div>
+            </div>
+            <p class="text-[9px] text-slate-500">Esta tarjeta es ficticia y solo sirve para probar pagos en tus sitios de desarrollo. No está conectada a ningún sistema real.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-xs text-slate-300">
+        <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-4">
+          <h3 class="text-sm font-medium mb-2">Reglas de simulación</h3>
+          <ul class="list-disc list-inside space-y-1">
+            <li>Si el monto es mayor al saldo de la cuenta, el pago se rechaza.</li>
+            <li>El saldo de la cuenta se descuenta solo cuando el pago es aprobado.</li>
+          </ul>
+        </div>
+
+        <div id="result-panel" class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 text-xs text-slate-300 min-h-[120px]">
+          <p class="text-slate-400 mb-2">Resultado de la última transacción</p>
+          <div id="result-content" class="text-[11px] text-slate-500">Aún no has enviado ningún pago de prueba.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/80 mt-6">
+    <div class="max-w-6xl mx-auto px-4 py-4 text-[11px] text-slate-500 flex items-center justify-between">
+      <span>Povy Sandbox · Solo para pruebas de desarrollo</span>
+      <span id="year"></span>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
