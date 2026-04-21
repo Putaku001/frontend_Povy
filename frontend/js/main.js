@@ -38,11 +38,15 @@ function isProtectedPage() {
   return document.body.dataset.requiresAuth === 'true';
 }
 
+function isAuthPage() {
+  return document.body.dataset.authPage === 'true';
+}
+
 function redirectToLogin() {
   if (!isProtectedPage()) return;
   const next = `${window.location.pathname}${window.location.search}`;
   const encoded = encodeURIComponent(next);
-  window.location.href = `${window.location.origin}/index.html?login=1&next=${encoded}`;
+  window.location.href = `${window.location.origin}/pages/login.html?next=${encoded}`;
 }
 
 async function fetchJSON(url, options = {}) {
@@ -163,6 +167,11 @@ async function hydrateSession() {
   }
 
   applyAuthUI();
+
+  if (getCurrentUser() && isAuthPage()) {
+    const next = new URLSearchParams(window.location.search).get('next');
+    window.location.href = next || `${window.location.origin}/pages/accounts.html`;
+  }
 }
 
 async function handleRegister(event) {
@@ -181,7 +190,7 @@ async function handleRegister(event) {
     showFormError('', 'register-error');
     document.getElementById('register-form')?.reset();
     const next = new URLSearchParams(window.location.search).get('next');
-    if (next) window.location.href = next;
+    window.location.href = next || `${window.location.origin}/pages/accounts.html`;
   } catch (err) {
     showFormError(err.message || 'No se pudo registrar.', 'register-error');
   }
@@ -202,11 +211,7 @@ async function handleLogin(event) {
     showFormError('', 'login-error');
     document.getElementById('login-form')?.reset();
     const next = new URLSearchParams(window.location.search).get('next');
-    if (next) {
-      window.location.href = next;
-      return;
-    }
-    renderHomeSummary();
+    window.location.href = next || `${window.location.origin}/pages/accounts.html`;
   } catch (err) {
     showFormError(err.message || 'No se pudo iniciar sesion.', 'login-error');
   }

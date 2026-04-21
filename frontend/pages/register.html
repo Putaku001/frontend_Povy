@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Povy - Register</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { primary: '#22c55e', primaryDark: '#16a34a' } } } };
+  </script>
+  <style>body { background: radial-gradient(circle at top, #1f2937 0, #020617 45%, #000 100%); }</style>
+</head>
+<body data-auth-page="true" class="min-h-screen flex flex-col text-slate-100">
+  <main class="flex-1 max-w-xl mx-auto w-full px-4 py-12 flex items-center">
+    <section class="w-full rounded-2xl border border-slate-800 bg-slate-950/85 p-8 space-y-6">
+      <div class="space-y-2">
+        <a href="../index.html" class="text-[11px] text-slate-400 hover:text-emerald-300">← Volver al inicio</a>
+        <p class="text-[11px] uppercase tracking-[0.18em] text-slate-400">Register</p>
+        <h1 class="text-3xl font-semibold">Crea tu usuario</h1>
+        <p class="text-sm text-slate-400">El registro está separado de las cuentas bancarias sandbox.</p>
+      </div>
+      <form id="register-form" class="space-y-4">
+        <input id="register-name" type="text" placeholder="Nombre" class="w-full rounded-md bg-slate-900 border border-slate-700 px-4 py-3 text-base outline-none focus:border-emerald-400" />
+        <input id="register-email" type="email" placeholder="correo@ejemplo.com" class="w-full rounded-md bg-slate-900 border border-slate-700 px-4 py-3 text-base outline-none focus:border-emerald-400" />
+        <input id="register-password" type="password" placeholder="Mínimo 6 caracteres" class="w-full rounded-md bg-slate-900 border border-slate-700 px-4 py-3 text-base outline-none focus:border-emerald-400" />
+        <button type="submit" class="w-full rounded-md bg-primary hover:bg-primaryDark text-slate-950 font-semibold py-3 text-base">Crear cuenta</button>
+        <p id="register-error" class="hidden text-sm text-red-400"></p>
+      </form>
+      <p class="text-sm text-slate-400">¿Ya tienes usuario? <a href="login.html" class="text-emerald-300 hover:text-emerald-200">Ir a login</a></p>
+    </section>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

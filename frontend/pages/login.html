@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Povy - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { primary: '#22c55e', primaryDark: '#16a34a' } } } };
+  </script>
+  <style>body { background: radial-gradient(circle at top, #1f2937 0, #020617 45%, #000 100%); }</style>
+</head>
+<body data-auth-page="true" class="min-h-screen flex flex-col text-slate-100">
+  <main class="flex-1 max-w-xl mx-auto w-full px-4 py-12 flex items-center">
+    <section class="w-full rounded-2xl border border-slate-800 bg-slate-950/85 p-8 space-y-6">
+      <div class="space-y-2">
+        <a href="../index.html" class="text-[11px] text-slate-400 hover:text-emerald-300">← Volver al inicio</a>
+        <p class="text-[11px] uppercase tracking-[0.18em] text-slate-400">Login</p>
+        <h1 class="text-3xl font-semibold">Entra a tu sandbox</h1>
+        <p class="text-sm text-slate-400">Tus cuentas bancarias sandbox se muestran solo después de iniciar sesión.</p>
+      </div>
+      <form id="login-form" class="space-y-4">
+        <input id="login-email" type="email" placeholder="correo@ejemplo.com" class="w-full rounded-md bg-slate-900 border border-slate-700 px-4 py-3 text-base outline-none focus:border-emerald-400" />
+        <input id="login-password" type="password" placeholder="Tu password" class="w-full rounded-md bg-slate-900 border border-slate-700 px-4 py-3 text-base outline-none focus:border-emerald-400" />
+        <button type="submit" class="w-full rounded-md bg-slate-800 hover:bg-slate-700 text-slate-100 font-semibold py-3 text-base">Iniciar sesión</button>
+        <p id="login-error" class="hidden text-sm text-red-400"></p>
+      </form>
+      <p class="text-sm text-slate-400">¿No tienes usuario? <a href="register.html" class="text-emerald-300 hover:text-emerald-200">Crear cuenta</a></p>
+    </section>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>
