@@ -39,31 +39,23 @@
     <section class="space-y-3">
       <h1 class="text-lg font-semibold">Povy API (sandbox)</h1>
       <p class="text-[11px] text-slate-400">Base URL: <code>https://backend-povy.onrender.com</code></p>
-      <p class="text-[11px] text-slate-400">La mejora principal es que ya no tienes que copiar tarjeta por tarjeta desde la UI. Ahora haces login, guardas el token y puedes pedir directamente todas tus cuentas con sus tarjetas asociadas.</p>
+      <p class="text-[11px] text-slate-400">El flujo principal vuelve a ser simple: puedes integrar pagos sandbox sin cuenta. Si luego quieres probar tarjetas, ahí sí usas tus cuentas Povy.</p>
     </section>
 
     <section class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-3">
-      <h2 class="text-sm font-semibold">1. Login y token</h2>
-      <pre id="code-login" class="text-[10px] text-slate-300 overflow-x-auto"><code>POST /api/auth/login
+      <h2 class="text-sm font-semibold">1. Pago genérico sin cuenta</h2>
+      <pre id="code-login" class="text-[10px] text-slate-300 overflow-x-auto"><code>POST /api/payments
 {
-  "email": "tu-correo@ejemplo.com",
-  "password": "tu-password"
-}
-
-// respuesta
-{
-  "token": "TOKEN_AQUI",
-  "user": {
-    "id": "...",
-    "name": "Tu nombre",
-    "email": "tu-correo@ejemplo.com"
-  }
+  "amount": 49.99,
+  "currency": "USD",
+  "description": "Pedido #123",
+  "merchantName": "Mi tienda demo"
 }</code></pre>
     </section>
 
     <section class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-3">
-      <h2 class="text-sm font-semibold">2. Obtener todas tus cuentas y tarjetas</h2>
-      <p class="text-[11px] text-slate-400">Este endpoint ya devuelve solo tus cuentas y dentro de cada cuenta viene la tarjeta. Eso te permite usar cualquiera de tus tarjetas en tu app sin andar copiando datos a mano.</p>
+      <h2 class="text-sm font-semibold">2. Cuentas solo para tarjetas</h2>
+      <p class="text-[11px] text-slate-400">Si quieres probar pagos con tarjeta, entras a tu cuenta Povy, creas una cuenta sandbox y usas la tarjeta asociada. Esa parte sigue separada del pago genérico.</p>
       <pre id="code-accounts" class="text-[10px] text-slate-300 overflow-x-auto"><code>GET /api/accounts
 Authorization: Bearer TOKEN_AQUI
 
@@ -91,47 +83,13 @@ Authorization: Bearer TOKEN_AQUI
       </div>
       <pre id="code-js-flow" class="text-[10px] text-slate-300 overflow-x-auto"><code>const BASE_URL = 'https://backend-povy.onrender.com';
 
-async function loginPovy(email, password) {
-  const resp = await fetch(`${BASE_URL}/api/auth/login`, {
+async function pagarConPovy(amount) {
+  const resp = await fetch(`${BASE_URL}/api/payments`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password })
-  });
-
-  return resp.json();
-}
-
-async function getAccounts(token) {
-  const resp = await fetch(`${BASE_URL}/api/accounts`, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    }
-  });
-
-  return resp.json();
-}
-
-async function payWithOneOfMyCards(email, password, amount) {
-  const auth = await loginPovy(email, password);
-  const accounts = await getAccounts(auth.token);
-
-  const selected = accounts[0];
-  const card = selected.card;
-
-  const resp = await fetch(`${BASE_URL}/api/payments/card`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${auth.token}`
-    },
     body: JSON.stringify({
-      cardNumber: card.cardNumber,
-      expMonth: card.expMonth,
-      expYear: card.expYear,
-      cvv: card.cvv,
       amount,
-      currency: selected.currency,
+      currency: 'USD',
       description: 'Compra sandbox',
       merchantName: 'Mi tienda demo'
     })

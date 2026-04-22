@@ -694,13 +694,6 @@ async function createAccount() {
   }
 }
 
-function updateAccountFieldsFromSelection() {
-  const accountSelect = document.getElementById('saved-account-select');
-  const accountNumberInput = document.getElementById('payAccountNumber');
-  if (!accountSelect || !accountNumberInput) return;
-  accountNumberInput.value = accountSelect.value || '';
-}
-
 function updateCardFieldsFromSelection() {
   const cardSelect = document.getElementById('saved-card-select');
   if (!cardSelect) return;
@@ -733,13 +726,13 @@ async function handlePaymentSubmit(event) {
     btn.textContent = 'Procesando...';
   }
 
-  const accountNumber = document.getElementById('payAccountNumber')?.value.trim() || '';
+  const merchantName = document.getElementById('payMerchantName')?.value.trim() || '';
   const amount = Number(document.getElementById('payAmount')?.value || '');
   const currency = document.getElementById('payCurrency')?.value || 'USD';
   const description = document.getElementById('payDescription')?.value || '';
 
-  if (!accountNumber || !Number.isFinite(amount) || amount <= 0) {
-    showFormError('Completa una cuenta valida y un monto mayor a 0.');
+  if (!Number.isFinite(amount) || amount <= 0) {
+    showFormError('Completa al menos un monto valido mayor a 0.');
     if (btn) {
       btn.disabled = false;
       btn.textContent = 'Procesar pago de prueba';
@@ -751,8 +744,7 @@ async function handlePaymentSubmit(event) {
     const result = await fetchJSON(`${API_BASE}/payments`, {
       method: 'POST',
       body: JSON.stringify({
-        merchantName: 'Povy Test',
-        accountNumber,
+        merchantName: merchantName || 'Povy Test',
         amount,
         currency,
         description,
@@ -765,9 +757,8 @@ async function handlePaymentSubmit(event) {
         <p><span class="font-semibold">Estado:</span> <span class="uppercase">${result.status}</span></p>
         <p><span class="font-semibold">Mensaje:</span> ${result.message}</p>
         <p><span class="font-semibold">Transaccion:</span> ${result.transactionId}</p>
-        <p><span class="font-semibold">Cuenta:</span> ${result.accountNumber}</p>
+        <p><span class="font-semibold">Comercio:</span> ${result.merchantName}</p>
         <p><span class="font-semibold">Monto:</span> ${formatMoney(result.amount, result.currency)}</p>
-        <p><span class="font-semibold">Saldo restante:</span> ${formatMoney(result.remainingBalance, result.currency)}</p>
         <p><span class="font-semibold">Descripcion:</span> ${result.description}</p>
       </div>
       `,
@@ -965,7 +956,6 @@ function bindAccountsPage() {
 function bindPaymentsPage() {
   document.getElementById('payment-form')?.addEventListener('submit', handlePaymentSubmit);
   document.getElementById('card-payment-form')?.addEventListener('submit', handleCardPaymentSubmit);
-  document.getElementById('saved-account-select')?.addEventListener('change', updateAccountFieldsFromSelection);
   document.getElementById('saved-card-select')?.addEventListener('change', updateCardFieldsFromSelection);
   attachCardInputsMasks();
 }

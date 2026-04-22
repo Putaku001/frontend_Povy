@@ -25,8 +25,8 @@
       <nav class="hidden md:flex items-center gap-5 text-xs text-slate-300">
         <a href="index.html" class="text-emerald-300">Inicio</a>
         <a href="pages/docs.html" class="hover:text-emerald-300">Docs API</a>
-        <a href="pages/accounts.html" data-auth="user" class="hidden hover:text-emerald-300">Cuentas</a>
-        <a href="pages/payments.html" data-auth="user" class="hidden hover:text-emerald-300">Pagos</a>
+        <a href="pages/accounts.html" class="hover:text-emerald-300">Cuentas</a>
+        <a href="pages/payments.html" class="hover:text-emerald-300">Pagos</a>
       </nav>
       <div class="hidden md:flex items-center gap-2 text-xs">
         <a href="pages/login.html" data-auth="guest" class="px-3 py-1.5 rounded-md border border-slate-700 text-slate-200 hover:border-emerald-400">Login</a>
@@ -40,8 +40,8 @@
       <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-2 text-[11px] text-slate-300">
         <a href="index.html">Inicio</a>
         <a href="pages/docs.html">Docs API</a>
-        <a href="pages/accounts.html" data-auth="user" class="hidden">Cuentas</a>
-        <a href="pages/payments.html" data-auth="user" class="hidden">Pagos</a>
+        <a href="pages/accounts.html">Cuentas</a>
+        <a href="pages/payments.html">Pagos</a>
         <a href="pages/login.html" data-auth="guest">Login</a>
         <a href="pages/register.html" data-auth="guest">Register</a>
         <button data-auth="user" data-action="logout" class="hidden text-left">Salir</button>
@@ -52,16 +52,16 @@
   <main class="flex-1 max-w-6xl mx-auto px-4 py-12 space-y-10">
     <section class="grid lg:grid-cols-[1.15fr,0.85fr] gap-8 items-start">
       <div class="space-y-5">
-        <p class="text-[11px] uppercase tracking-[0.18em] text-emerald-300/90">Sandbox bancario privado</p>
-        <h1 class="text-3xl md:text-4xl font-semibold leading-tight">Prueba pagos, rechazos y devoluciones con cuentas sandbox privadas por usuario.</h1>
-        <p class="text-sm text-slate-300 max-w-2xl">Cada usuario ve únicamente sus cuentas y tarjetas. El historial distingue pagos aprobados, rechazados y devoluciones, y ahora puedes trabajar también con EUR.</p>
+        <p class="text-[11px] uppercase tracking-[0.18em] text-emerald-300/90">Sandbox de pagos flexible</p>
+        <h1 class="text-3xl md:text-4xl font-semibold leading-tight">Prueba pagos sin cuenta y usa tarjetas sandbox solo cuando las necesites.</h1>
+        <p class="text-sm text-slate-300 max-w-2xl">El flujo principal de pagos vuelve a ser directo para cualquier proyecto. Las cuentas quedan como espacio privado para crear tarjetas Povy, revisar historial y manejar devoluciones.</p>
         <div class="grid sm:grid-cols-3 gap-3 text-[11px]">
-          <div class="rounded-lg border border-slate-800 bg-slate-950/80 p-3">Login separado del manejo de cuentas.</div>
-          <div class="rounded-lg border border-slate-800 bg-slate-950/80 p-3">Solo se muestran cuentas después de iniciar sesión.</div>
-          <div class="rounded-lg border border-slate-800 bg-slate-950/80 p-3">API directa para listar cuentas y tarjetas del usuario.</div>
+          <div class="rounded-lg border border-slate-800 bg-slate-950/80 p-3">Pago genérico sin crear cuenta.</div>
+          <div class="rounded-lg border border-slate-800 bg-slate-950/80 p-3">Tarjetas sandbox opcionales desde cuentas privadas.</div>
+          <div class="rounded-lg border border-slate-800 bg-slate-950/80 p-3">API simple para integrar rápido en cualquier demo.</div>
         </div>
         <div class="flex flex-wrap gap-3 text-xs" data-auth="guest">
-          <a href="pages/login.html" class="px-5 py-2.5 rounded-md border border-slate-700 text-slate-200 hover:border-emerald-400">Ir a login</a>
+          <a href="pages/payments.html" class="px-5 py-2.5 rounded-md border border-slate-700 text-slate-200 hover:border-emerald-400">Ir a pagos</a>
           <a href="pages/register.html" class="px-5 py-2.5 rounded-md bg-primary hover:bg-primaryDark text-slate-950 font-semibold">Crear usuario</a>
         </div>
         <div class="hidden flex flex-wrap gap-3 text-xs" data-auth="user">
