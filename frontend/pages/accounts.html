@@ -15,27 +15,34 @@
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
       <div class="flex items-center gap-2">
         <div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-emerald-400 flex items-center justify-center text-xs font-bold">PV</div>
-        <div><p class="text-sm font-semibold">Povy</p><p class="text-[11px] text-slate-400">Mis cuentas</p></div>
+        <div>
+          <p class="text-sm font-semibold leading-tight">Povy</p>
+          <p class="text-[11px] text-slate-400 leading-tight">Banco sandbox para pruebas</p>
+        </div>
       </div>
       <nav class="hidden md:flex items-center gap-5 text-xs text-slate-300">
         <a href="../index.html" class="hover:text-emerald-300">Inicio</a>
+        <a href="docs.html" class="hover:text-emerald-300">Docs API</a>
         <a href="accounts.html" class="text-emerald-300">Cuentas</a>
         <a href="payments.html" class="hover:text-emerald-300">Pagos</a>
-        <a href="docs.html" class="hover:text-emerald-300">Docs API</a>
       </nav>
       <div class="hidden md:flex items-center gap-2 text-xs">
-        <span class="text-slate-300">Usuario: <span data-auth-name class="font-semibold text-emerald-300"></span></span>
-        <button data-action="logout" class="px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-100">Salir</button>
+        <a href="login.html" data-auth="guest" class="px-3 py-1.5 rounded-md border border-slate-700 text-slate-200 hover:border-emerald-400">Login</a>
+        <a href="register.html" data-auth="guest" class="px-3 py-1.5 rounded-md bg-primary hover:bg-primaryDark text-slate-950 font-semibold">Register</a>
+        <span data-auth="user" class="hidden text-slate-300">Hola, <span data-auth-name class="font-semibold text-emerald-300"></span></span>
+        <button data-auth="user" data-action="logout" class="hidden px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-100">Salir</button>
       </div>
-      <button id="nav-toggle" class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-full bg-primary hover:bg-primaryDark text-slate-950 text-sm font-bold">≡</button>
+      <button id="nav-toggle" class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-full bg-primary hover:bg-primaryDark text-slate-950 text-sm font-bold" aria-label="Abrir navegacion">=</button>
     </div>
     <div id="mobile-nav" class="md:hidden hidden absolute left-0 right-0 top-full border-t border-slate-800/80 bg-slate-950/95 z-40">
       <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-2 text-[11px] text-slate-300">
         <a href="../index.html">Inicio</a>
+        <a href="docs.html">Docs API</a>
         <a href="accounts.html">Cuentas</a>
         <a href="payments.html">Pagos</a>
-        <a href="docs.html">Docs API</a>
-        <button data-action="logout" class="text-left">Salir</button>
+        <a href="login.html" data-auth="guest">Login</a>
+        <a href="register.html" data-auth="guest">Register</a>
+        <button data-auth="user" data-action="logout" class="hidden text-left">Salir</button>
       </nav>
     </div>
   </header>
@@ -45,7 +52,7 @@
       <div class="rounded-xl border border-slate-800 bg-slate-950/80 p-5 space-y-4">
         <div>
           <p class="text-[11px] uppercase tracking-[0.14em] text-slate-400">Nueva cuenta</p>
-            <h1 class="text-lg font-semibold">Crea una cuenta para probar tarjetas sandbox</h1>
+          <h1 class="text-lg font-semibold">Crea una cuenta para probar tarjetas sandbox</h1>
         </div>
         <div class="grid gap-3 text-sm">
           <input id="ownerName" type="text" maxlength="40" placeholder="Titular opcional" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 outline-none focus:border-emerald-400" />

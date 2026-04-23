@@ -23,44 +23,40 @@
       background: radial-gradient(circle at top, #1f2937 0, #020617 45%, #000 100%);
     }
   </style>
- </head>
+</head>
 <body class="min-h-screen flex flex-col text-slate-100">
   <header class="relative z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-2 w-72">
-        <div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-emerald-400 flex items-center justify-center text-xs font-bold">
-          PV
-        </div>
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-emerald-400 flex items-center justify-center text-xs font-bold">PV</div>
         <div>
           <p class="text-sm font-semibold leading-tight">Povy</p>
-          <p class="text-[11px] text-slate-400 leading-tight">Sandbox de pagos</p>
+          <p class="text-[11px] text-slate-400 leading-tight">Banco sandbox para pruebas</p>
         </div>
       </div>
       <nav class="hidden md:flex items-center gap-5 text-xs text-slate-300">
         <a href="../index.html" class="hover:text-emerald-300">Inicio</a>
+        <a href="docs.html" class="hover:text-emerald-300">Docs API</a>
         <a href="accounts.html" class="hover:text-emerald-300">Cuentas</a>
         <a href="payments.html" class="text-emerald-300">Pagos</a>
-        <a href="docs.html" class="hover:text-emerald-300">Docs API</a>
       </nav>
       <div class="hidden md:flex items-center gap-2 text-xs">
         <a href="login.html" data-auth="guest" class="px-3 py-1.5 rounded-md border border-slate-700 text-slate-200 hover:border-emerald-400">Login</a>
         <a href="register.html" data-auth="guest" class="px-3 py-1.5 rounded-md bg-primary hover:bg-primaryDark text-slate-950 font-semibold">Register</a>
-        <span data-auth="user" class="hidden text-slate-300"><span data-auth-name class="font-semibold text-emerald-300"></span></span>
+        <span data-auth="user" class="hidden text-slate-300">Hola, <span data-auth-name class="font-semibold text-emerald-300"></span></span>
         <button data-auth="user" data-action="logout" class="hidden px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-100">Salir</button>
       </div>
-      <button id="nav-toggle" class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-full bg-primary hover:bg-primaryDark text-slate-950 text-sm font-bold" aria-label="Abrir navegación">
-        ☰
-      </button>
+      <button id="nav-toggle" class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-full bg-primary hover:bg-primaryDark text-slate-950 text-sm font-bold" aria-label="Abrir navegacion">=</button>
     </div>
     <div id="mobile-nav" class="md:hidden hidden absolute left-0 right-0 top-full border-t border-slate-800/80 bg-slate-950/95 z-40">
-      <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-1.5 text-[11px] text-slate-300">
-        <a href="../index.html" class="py-1">Inicio</a>
-        <a href="accounts.html" class="py-1">Cuentas</a>
-        <a href="payments.html" class="py-1">Pagos</a>
-        <a href="docs.html" class="py-1">Docs API</a>
-        <a href="login.html" data-auth="guest" class="py-1">Login</a>
-        <a href="register.html" data-auth="guest" class="py-1">Register</a>
-        <button data-auth="user" data-action="logout" class="hidden text-left py-1">Salir</button>
+      <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-2 text-[11px] text-slate-300">
+        <a href="../index.html">Inicio</a>
+        <a href="docs.html">Docs API</a>
+        <a href="accounts.html">Cuentas</a>
+        <a href="payments.html">Pagos</a>
+        <a href="login.html" data-auth="guest">Login</a>
+        <a href="register.html" data-auth="guest">Register</a>
+        <button data-auth="user" data-action="logout" class="hidden text-left">Salir</button>
       </nav>
     </div>
   </header>
@@ -74,12 +70,12 @@
         </div>
 
         <div class="p-4 rounded-xl border border-slate-800 bg-slate-950/70 shadow-lg shadow-emerald-500/10 text-sm">
-          <p class="text-[11px] text-slate-400 mb-2 uppercase tracking-[0.12em]">Pago genérico integrable</p>
+          <p class="text-[11px] text-slate-400 mb-2 uppercase tracking-[0.12em]">Pago generico integrable</p>
           <form id="payment-form" class="space-y-3">
             <div>
               <label class="block text-slate-300 mb-1 text-xs">Nombre del comercio</label>
               <input id="payMerchantName" type="text" placeholder="Mi tienda demo" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-xs outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
-              <p class="text-[10px] text-slate-500 mt-1">Este pago no necesita cuenta Povy. Solo envías el monto y tu referencia.</p>
+              <p class="text-[10px] text-slate-500 mt-1">Este pago no necesita cuenta Povy. Solo envias el monto y tu referencia.</p>
             </div>
 
             <div class="grid grid-cols-[1.2fr,0.8fr] gap-3">
@@ -99,7 +95,7 @@
             </div>
 
             <div>
-              <label class="block text-slate-300 mb-1 text-xs">Descripción</label>
+              <label class="block text-slate-300 mb-1 text-xs">Descripcion</label>
               <input id="payDescription" type="text" placeholder="Compra de prueba" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-xs outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
             </div>
 
@@ -112,11 +108,11 @@
 
         <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-3 text-xs text-slate-300">
           <p class="text-[11px] text-slate-400 uppercase tracking-[0.12em] mb-1">Pago con tarjeta Povy</p>
-          <p class="text-[11px] text-slate-400">Usa una tarjeta asociada a una cuenta Povy solo si quieres probar también el flujo con tarjeta. Todos los datos son ficticios y solo sirven para pruebas.</p>
+          <p class="text-[11px] text-slate-400">Usa una tarjeta asociada a una cuenta Povy solo si quieres probar tambien el flujo con tarjeta. Todos los datos son ficticios y solo sirven para pruebas.</p>
 
           <form id="card-payment-form" class="space-y-2 mt-1">
             <div>
-              <label class="block text-slate-300 mb-1 text-xs">Número de tarjeta</label>
+              <label class="block text-slate-300 mb-1 text-xs">Numero de tarjeta</label>
               <input id="cardNumber" type="text" inputmode="numeric" autocomplete="off" placeholder="4111 1111 1111 1111" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-xs tracking-[0.22em] outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
             </div>
 
@@ -126,7 +122,7 @@
                 <input id="cardExpMonth" type="text" inputmode="numeric" autocomplete="off" placeholder="12" class="w-full rounded-md bg-slate-900 border border-slate-700 px-2 py-2 text-xs text-center outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
               </div>
               <div>
-                <label class="block text-slate-300 mb-1 text-xs">Año</label>
+                <label class="block text-slate-300 mb-1 text-xs">Ano</label>
                 <input id="cardExpYear" type="text" inputmode="numeric" autocomplete="off" placeholder="28" class="w-full rounded-md bg-slate-900 border border-slate-700 px-2 py-2 text-xs text-center outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
               </div>
               <div>
@@ -152,7 +148,7 @@
             </div>
 
             <div>
-              <label class="block text-slate-300 mb-1 text-xs">Descripción</label>
+              <label class="block text-slate-300 mb-1 text-xs">Descripcion</label>
               <input id="cardPayDescription" type="text" placeholder="Pago de prueba con tarjeta" class="w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 text-xs outline-none focus:border-emerald-400 focus:ring-1 focus:ring-emerald-400" />
             </div>
 
@@ -169,12 +165,12 @@
               <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-900/70 border border-slate-700 text-slate-200">TEST CARD</span>
             </div>
             <div class="relative space-y-1">
-              <p class="text-[10px] text-slate-400">Número de tarjeta</p>
+              <p class="text-[10px] text-slate-400">Numero de tarjeta</p>
               <p id="pay-card-number" class="text-sm tracking-[0.22em]">---- ---- ---- ----</p>
             </div>
             <div class="relative flex items-center justify-between">
               <div>
-                <p class="text-[10px] text-slate-400">Expiración</p>
+                <p class="text-[10px] text-slate-400">Expiracion</p>
                 <p id="pay-card-exp" class="text-[11px]">--/--</p>
               </div>
               <div class="text-right">
@@ -182,25 +178,25 @@
                 <p class="text-[11px] text-slate-200">Pago de prueba</p>
               </div>
             </div>
-            <p class="text-[9px] text-slate-500">Esta tarjeta es ficticia y solo sirve para probar pagos en tus sitios de desarrollo. No está conectada a ningún sistema real.</p>
+            <p class="text-[9px] text-slate-500">Esta tarjeta es ficticia y solo sirve para probar pagos en tus sitios de desarrollo. No esta conectada a ningun sistema real.</p>
           </div>
         </div>
       </div>
 
       <div class="space-y-4 text-xs text-slate-300">
         <div class="rounded-xl border border-slate-800 bg-slate-950/70 p-4">
-          <h3 class="text-sm font-medium mb-2">Reglas de simulación</h3>
+          <h3 class="text-sm font-medium mb-2">Reglas de simulacion</h3>
           <ul class="list-disc list-inside space-y-1">
-            <li>El pago genérico de <code>/api/payments</code> no requiere cuenta ni tarjeta.</li>
-            <li>El flujo de tarjeta sí depende de una cuenta Povy y descuenta saldo solo si se aprueba.</li>
+            <li>El pago generico de <code>/api/payments</code> no requiere cuenta ni tarjeta.</li>
+            <li>El flujo de tarjeta si depende de una cuenta Povy y descuenta saldo solo si se aprueba.</li>
             <li>Las devoluciones se hacen desde el historial de la cuenta.</li>
             <li>Monedas soportadas: USD, MXN, JPY y EUR.</li>
           </ul>
         </div>
 
         <div id="result-panel" class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 text-xs text-slate-300 min-h-[120px]">
-          <p class="text-slate-400 mb-2">Resultado de la última transacción</p>
-          <div id="result-content" class="text-[11px] text-slate-500">Aún no has enviado ningún pago de prueba.</div>
+          <p class="text-slate-400 mb-2">Resultado de la ultima transaccion</p>
+          <div id="result-content" class="text-[11px] text-slate-500">Aun no has enviado ningun pago de prueba.</div>
         </div>
       </div>
     </section>

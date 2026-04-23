@@ -11,22 +11,58 @@
   <style>body { background: radial-gradient(circle at top, #1f2937 0, #020617 45%, #000 100%); }</style>
 </head>
 <body data-auth-page="true" class="min-h-screen flex flex-col text-slate-100">
+  <header class="relative z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-emerald-400 flex items-center justify-center text-xs font-bold">PV</div>
+        <div>
+          <p class="text-sm font-semibold leading-tight">Povy</p>
+          <p class="text-[11px] text-slate-400 leading-tight">Banco sandbox para pruebas</p>
+        </div>
+      </div>
+      <nav class="hidden md:flex items-center gap-5 text-xs text-slate-300">
+        <a href="../index.html" class="hover:text-emerald-300">Inicio</a>
+        <a href="docs.html" class="hover:text-emerald-300">Docs API</a>
+        <a href="accounts.html" class="hover:text-emerald-300">Cuentas</a>
+        <a href="payments.html" class="hover:text-emerald-300">Pagos</a>
+      </nav>
+      <div class="hidden md:flex items-center gap-2 text-xs">
+        <a href="login.html" data-auth="guest" class="px-3 py-1.5 rounded-md border border-slate-700 text-slate-200 hover:border-emerald-400">Login</a>
+        <a href="register.html" data-auth="guest" class="px-3 py-1.5 rounded-md bg-primary text-slate-950 font-semibold">Register</a>
+        <span data-auth="user" class="hidden text-slate-300">Hola, <span data-auth-name class="font-semibold text-emerald-300"></span></span>
+        <button data-auth="user" data-action="logout" class="hidden px-3 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-100">Salir</button>
+      </div>
+      <button id="nav-toggle" class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-full bg-primary hover:bg-primaryDark text-slate-950 text-sm font-bold" aria-label="Abrir navegacion">=</button>
+    </div>
+    <div id="mobile-nav" class="md:hidden hidden absolute left-0 right-0 top-full border-t border-slate-800/80 bg-slate-950/95 z-40">
+      <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-2 text-[11px] text-slate-300">
+        <a href="../index.html">Inicio</a>
+        <a href="docs.html">Docs API</a>
+        <a href="accounts.html">Cuentas</a>
+        <a href="payments.html">Pagos</a>
+        <a href="login.html" data-auth="guest">Login</a>
+        <a href="register.html" data-auth="guest">Register</a>
+        <button data-auth="user" data-action="logout" class="hidden text-left">Salir</button>
+      </nav>
+    </div>
+  </header>
+
   <main class="flex-1 max-w-xl mx-auto w-full px-4 py-12 flex items-center">
     <section class="w-full rounded-2xl border border-slate-800 bg-slate-950/85 p-8 space-y-6">
       <div class="space-y-2">
-        <a href="../index.html" class="text-[11px] text-slate-400 hover:text-emerald-300">← Volver al inicio</a>
+        <a href="../index.html" class="text-[11px] text-slate-400 hover:text-emerald-300">&larr; Volver al inicio</a>
         <p class="text-[11px] uppercase tracking-[0.18em] text-slate-400">Register</p>
         <h1 class="text-3xl font-semibold">Crea tu usuario</h1>
-        <p class="text-sm text-slate-400">El registro está separado de las cuentas bancarias sandbox.</p>
+        <p class="text-sm text-slate-400">El registro est&aacute; separado de las cuentas bancarias sandbox.</p>
       </div>
       <form id="register-form" class="space-y-4">
         <input id="register-name" type="text" placeholder="Nombre" class="w-full rounded-md bg-slate-900 border border-slate-700 px-4 py-3 text-base outline-none focus:border-emerald-400" />
         <input id="register-email" type="email" placeholder="correo@ejemplo.com" class="w-full rounded-md bg-slate-900 border border-slate-700 px-4 py-3 text-base outline-none focus:border-emerald-400" />
-        <input id="register-password" type="password" placeholder="Mínimo 6 caracteres" class="w-full rounded-md bg-slate-900 border border-slate-700 px-4 py-3 text-base outline-none focus:border-emerald-400" />
+        <input id="register-password" type="password" placeholder="M&iacute;nimo 6 caracteres" class="w-full rounded-md bg-slate-900 border border-slate-700 px-4 py-3 text-base outline-none focus:border-emerald-400" />
         <button type="submit" class="w-full rounded-md bg-primary hover:bg-primaryDark text-slate-950 font-semibold py-3 text-base">Crear cuenta</button>
         <p id="register-error" class="hidden text-sm text-red-400"></p>
       </form>
-      <p class="text-sm text-slate-400">¿Ya tienes usuario? <a href="login.html" class="text-emerald-300 hover:text-emerald-200">Ir a login</a></p>
+      <p class="text-sm text-slate-400">&iquest;Ya tienes usuario? <a href="login.html" class="text-emerald-300 hover:text-emerald-200">Ir a login</a></p>
     </section>
   </main>
   <script src="../js/main.js"></script>
