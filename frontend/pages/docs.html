@@ -6,16 +6,43 @@
   <title>Povy - Docs API</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    tailwind.config = { theme: { extend: { colors: { primary: '#22c55e', primaryDark: '#16a34a' } } } };
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#22c55e',
+            primaryDark: '#16a34a',
+            ink: '#0b1220',
+            panel: '#09111d'
+          }
+        }
+      }
+    };
   </script>
-  <style>body { background: radial-gradient(circle at top, #1f2937 0, #020617 45%, #000 100%); }</style>
+  <style>
+    :root {
+      --bg-a: #08101b;
+      --bg-b: #030712;
+      --bg-c: #101828;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.12), transparent 25%),
+        radial-gradient(circle at top right, rgba(56, 189, 248, 0.1), transparent 20%),
+        linear-gradient(160deg, var(--bg-c) 0%, var(--bg-a) 40%, var(--bg-b) 100%);
+    }
+  </style>
 </head>
 <body class="min-h-screen flex flex-col text-slate-100">
   <header class="relative border-b border-slate-800/80 bg-slate-950/80 backdrop-blur">
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between gap-4">
       <div class="flex items-center gap-2">
-        <div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-emerald-400 flex items-center justify-center text-xs font-bold">PV</div>
-        <div><p class="text-sm font-semibold">Povy</p><p class="text-[11px] text-slate-400">Docs API</p></div>
+        <div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-emerald-300 flex items-center justify-center text-xs font-bold text-slate-950">PV</div>
+        <div>
+          <p class="text-sm font-semibold">Povy</p>
+          <p class="text-[11px] text-slate-400">Docs API</p>
+        </div>
       </div>
       <nav class="hidden md:flex items-center gap-5 text-xs text-slate-300">
         <a href="../index.html" class="hover:text-emerald-300">Inicio</a>
@@ -23,7 +50,7 @@
         <a href="payments.html" class="hover:text-emerald-300">Pagos</a>
         <a href="docs.html" class="text-emerald-300">Docs API</a>
       </nav>
-      <button id="nav-toggle" class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-full bg-primary hover:bg-primaryDark text-slate-950 text-sm font-bold">≡</button>
+      <button id="nav-toggle" class="md:hidden inline-flex items-center justify-center h-9 w-9 rounded-full bg-primary hover:bg-primaryDark text-slate-950 text-sm font-bold">=</button>
     </div>
     <div id="mobile-nav" class="md:hidden hidden absolute left-0 right-0 top-full border-t border-slate-800/80 bg-slate-950/95 z-40">
       <nav class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-2 text-[11px] text-slate-300">
@@ -35,95 +62,316 @@
     </div>
   </header>
 
-  <main class="flex-1 max-w-5xl mx-auto px-4 py-8 space-y-6 text-xs text-slate-300">
-    <section class="space-y-3">
-      <h1 class="text-lg font-semibold">Povy API (sandbox)</h1>
-      <p class="text-[11px] text-slate-400">Base URL: <code>https://backend-povy.onrender.com</code></p>
-      <p class="text-[11px] text-slate-400">El flujo principal vuelve a ser simple: puedes integrar pagos sandbox sin cuenta. Si luego quieres probar tarjetas, ahí sí usas tus cuentas Povy.</p>
-    </section>
-
-    <section class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-3">
-      <h2 class="text-sm font-semibold">1. Pago genérico sin cuenta</h2>
-      <pre id="code-login" class="text-[10px] text-slate-300 overflow-x-auto"><code>POST /api/payments
-{
-  "amount": 49.99,
-  "currency": "USD",
-  "description": "Pedido #123",
-  "merchantName": "Mi tienda demo"
-}</code></pre>
-    </section>
-
-    <section class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-3">
-      <h2 class="text-sm font-semibold">2. Cuentas solo para tarjetas</h2>
-      <p class="text-[11px] text-slate-400">Si quieres probar pagos con tarjeta, entras a tu cuenta Povy, creas una cuenta sandbox y usas la tarjeta asociada. Esa parte sigue separada del pago genérico.</p>
-      <pre id="code-accounts" class="text-[10px] text-slate-300 overflow-x-auto"><code>GET /api/accounts
-Authorization: Bearer TOKEN_AQUI
-
-// respuesta resumida
-[
-  {
-    "accountNumber": "001-00000001",
-    "ownerName": "Tu nombre",
-    "balance": 10000,
-    "currency": "EUR",
-    "card": {
-      "cardNumber": "4111111111111111",
-      "expMonth": "12",
-      "expYear": "29",
-      "cvv": "123"
-    }
-  }
-]</code></pre>
-    </section>
-
-    <section class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-3">
-      <div class="flex items-center justify-between gap-2">
-        <h2 class="text-sm font-semibold">3. Flujo recomendado en JavaScript</h2>
-        <button type="button" data-copy-target="code-js-flow" class="text-[10px] px-2 py-1 rounded-md border border-slate-700 text-slate-200 hover:bg-slate-800">Copiar</button>
+  <main class="flex-1 max-w-6xl mx-auto px-4 py-8 space-y-6 text-xs text-slate-300">
+    <section class="grid gap-4 lg:grid-cols-[1.3fr_0.7fr] items-start">
+      <div class="space-y-3">
+        <span class="inline-flex items-center rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-emerald-300">Povy Checkout API</span>
+        <h1 class="text-2xl sm:text-3xl font-semibold leading-tight">Integra pagos y reembolsos de Povy para copiar y pegar sin perder tiempo.</h1>
+        <p class="text-sm text-slate-400 max-w-3xl">Esto es lo m&iacute;nimo para conectar Povy en cualquier sitio: una funci&oacute;n para cobrar, una para reembolsar y ejemplos listos en varios lenguajes.</p>
       </div>
-      <pre id="code-js-flow" class="text-[10px] text-slate-300 overflow-x-auto"><code>const BASE_URL = 'https://backend-povy.onrender.com';
 
-async function pagarConPovy(amount) {
-  const resp = await fetch(`${BASE_URL}/api/payments`, {
+      <div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-4 space-y-3">
+        <p class="text-[10px] uppercase tracking-[0.18em] text-slate-500">Base URL</p>
+        <code class="block text-[11px] text-emerald-300 break-all">https://backend-povy.onrender.com</code>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="rounded-xl border border-slate-800 bg-slate-900/70 p-3">
+            <p class="text-[10px] text-slate-500">Pago</p>
+            <p class="text-[11px] text-slate-300 font-medium">POST /api/payments</p>
+          </div>
+          <div class="rounded-xl border border-slate-800 bg-slate-900/70 p-3">
+            <p class="text-[10px] text-slate-500">Refund</p>
+            <p class="text-[11px] text-slate-300 font-medium">POST /api/payments/:transactionId/refund</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 space-y-4">
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <h2 class="text-base font-semibold">Lo que necesitas</h2>
+          <p class="text-[11px] text-slate-400">Pon esto en tu c&oacute;digo y ya tienes la base para cobrar con Povy.</p>
+        </div>
+        <button type="button" data-copy-target="code-povy-api" class="text-[10px] px-2 py-1 rounded-md border border-slate-700 text-slate-200 hover:bg-slate-800">Copiar</button>
+      </div>
+
+      <pre id="code-povy-api" class="overflow-x-auto rounded-xl border border-slate-800 bg-[#050b14] p-4 text-[11px] text-slate-200"><code>const PovyApi = {
+  baseUrl: 'https://backend-povy.onrender.com',
+
+  async pay({ amount, currency = 'USD', description, merchantName }) {
+    const response = await fetch(`${this.baseUrl}/api/payments`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount,
+        currency,
+        description,
+        merchantName
+      })
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.message || 'No se pudo procesar el pago con Povy.');
+    }
+
+    return response.json();
+  },
+
+  async refund(transactionId, { amount } = {}, token) {
+    const response = await fetch(`${this.baseUrl}/api/payments/${transactionId}/refund`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(amount ? { amount } : {})
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({}));
+      throw new Error(error.message || 'No se pudo hacer el reembolso.');
+    }
+
+    return response.json();
+  }
+};</code></pre>
+
+      <div class="grid gap-3 sm:grid-cols-3">
+        <div class="rounded-xl border border-slate-800 bg-slate-900/70 p-3">
+          <p class="text-[10px] uppercase tracking-[0.16em] text-slate-500">Para cobrar</p>
+          <p class="text-[11px] text-slate-300 mt-1">Solo necesitas <code>amount</code>, <code>currency</code>, <code>description</code> y <code>merchantName</code>.</p>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/70 p-3">
+          <p class="text-[10px] uppercase tracking-[0.16em] text-slate-500">Para reembolsar</p>
+          <p class="text-[11px] text-slate-300 mt-1">Necesitas <code>transactionId</code> y un <code>Bearer token</code> de una sesi&oacute;n Povy.</p>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/70 p-3">
+          <p class="text-[10px] uppercase tracking-[0.16em] text-slate-500">Respuesta</p>
+          <p class="text-[11px] text-slate-300 mt-1">Te devuelve <code>transactionId</code>, estado, monto y mensaje para guardarlo en tu sistema.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 space-y-4">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 class="text-base font-semibold">Ejemplo de pago con Povy</h2>
+          <p class="text-[11px] text-slate-400">Una sola card, varios lenguajes. Escoges y copias.</p>
+        </div>
+        <label class="flex items-center gap-2 text-[11px] text-slate-400">
+          <span>Lenguaje</span>
+          <select id="docs-language-select" class="rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-[11px] text-slate-200 outline-none">
+            <option value="js">JavaScript</option>
+            <option value="php">PHP</option>
+            <option value="csharp">C#</option>
+            <option value="python">Python</option>
+            <option value="kotlin">Kotlin</option>
+            <option value="java">Java</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="flex items-center justify-end">
+        <button type="button" data-copy-target="docs-code-payment-js" class="hidden text-[10px] px-2 py-1 rounded-md border border-slate-700 text-slate-200 hover:bg-slate-800" data-docs-language="js">Copiar</button>
+        <button type="button" data-copy-target="docs-code-payment-php" class="hidden text-[10px] px-2 py-1 rounded-md border border-slate-700 text-slate-200 hover:bg-slate-800" data-docs-language="php">Copiar</button>
+        <button type="button" data-copy-target="docs-code-payment-csharp" class="hidden text-[10px] px-2 py-1 rounded-md border border-slate-700 text-slate-200 hover:bg-slate-800" data-docs-language="csharp">Copiar</button>
+        <button type="button" data-copy-target="docs-code-payment-python" class="hidden text-[10px] px-2 py-1 rounded-md border border-slate-700 text-slate-200 hover:bg-slate-800" data-docs-language="python">Copiar</button>
+        <button type="button" data-copy-target="docs-code-payment-kotlin" class="hidden text-[10px] px-2 py-1 rounded-md border border-slate-700 text-slate-200 hover:bg-slate-800" data-docs-language="kotlin">Copiar</button>
+        <button type="button" data-copy-target="docs-code-payment-java" class="hidden text-[10px] px-2 py-1 rounded-md border border-slate-700 text-slate-200 hover:bg-slate-800" data-docs-language="java">Copiar</button>
+      </div>
+
+      <pre id="docs-code-payment-js" data-docs-language="js" class="overflow-x-auto rounded-xl border border-slate-800 bg-[#050b14] p-4 text-[11px] text-slate-200"><code>const PovyApi = {
+  baseUrl: 'https://backend-povy.onrender.com'
+};
+
+async function pagarConPovy() {
+  const response = await fetch(`${PovyApi.baseUrl}/api/payments`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      amount,
+      amount: 49.99,
       currency: 'USD',
-      description: 'Compra sandbox',
-      merchantName: 'Mi tienda demo'
+      description: 'Pedido #1234',
+      merchantName: 'Mi tienda'
     })
   });
 
-  return resp.json();
+  const data = await response.json();
+  console.log(data);
 }</code></pre>
-    </section>
 
-    <section class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-3">
-      <h2 class="text-sm font-semibold">4. Devoluciones</h2>
-      <pre id="code-refund" class="text-[10px] text-slate-300 overflow-x-auto"><code>POST /api/payments/:transactionId/refund
-Authorization: Bearer TOKEN_AQUI
+      <pre id="docs-code-payment-php" data-docs-language="php" class="hidden overflow-x-auto rounded-xl border border-slate-800 bg-[#050b14] p-4 text-[11px] text-slate-200"><code>&lt;?php
+$payload = [
+  "amount" =&gt; 49.99,
+  "currency" =&gt; "USD",
+  "description" =&gt; "Pedido #1234",
+  "merchantName" =&gt; "Mi tienda"
+];
+
+$ch = curl_init("https://backend-povy.onrender.com/api/payments");
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, ["Content-Type: application/json"]);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+echo $response;</code></pre>
+
+      <pre id="docs-code-payment-csharp" data-docs-language="csharp" class="hidden overflow-x-auto rounded-xl border border-slate-800 bg-[#050b14] p-4 text-[11px] text-slate-200"><code>using System.Net.Http;
+using System.Text;
+
+var client = new HttpClient();
+var json = """
 {
-  "amount": 49.99
+  "amount": 49.99,
+  "currency": "USD",
+  "description": "Pedido #1234",
+  "merchantName": "Mi tienda"
+}
+""";
+
+var content = new StringContent(json, Encoding.UTF8, "application/json");
+var response = await client.PostAsync("https://backend-povy.onrender.com/api/payments", content);
+var body = await response.Content.ReadAsStringAsync();
+
+Console.WriteLine(body);</code></pre>
+
+      <pre id="docs-code-payment-python" data-docs-language="python" class="hidden overflow-x-auto rounded-xl border border-slate-800 bg-[#050b14] p-4 text-[11px] text-slate-200"><code>import requests
+
+payload = {
+    "amount": 49.99,
+    "currency": "USD",
+    "description": "Pedido #1234",
+    "merchantName": "Mi tienda"
 }
 
-// Solo funciona para pagos aprobados.
-// Si omites amount, devuelve el total del pago original.</code></pre>
+response = requests.post(
+    "https://backend-povy.onrender.com/api/payments",
+    json=payload,
+    timeout=15
+)
+
+print(response.json())</code></pre>
+
+      <pre id="docs-code-payment-kotlin" data-docs-language="kotlin" class="hidden overflow-x-auto rounded-xl border border-slate-800 bg-[#050b14] p-4 text-[11px] text-slate-200"><code>val client = okhttp3.OkHttpClient()
+val json = """
+  {
+    "amount": 49.99,
+    "currency": "USD",
+    "description": "Pedido #1234",
+    "merchantName": "Mi tienda"
+  }
+""".trimIndent()
+
+val body = json.toRequestBody("application/json".toMediaType())
+val request = Request.Builder()
+  .url("https://backend-povy.onrender.com/api/payments")
+  .post(body)
+  .build()
+
+client.newCall(request).execute().use { response ->
+  println(response.body?.string())
+}</code></pre>
+
+      <pre id="docs-code-payment-java" data-docs-language="java" class="hidden overflow-x-auto rounded-xl border border-slate-800 bg-[#050b14] p-4 text-[11px] text-slate-200"><code>HttpClient client = HttpClient.newHttpClient();
+String json = """
+{
+  "amount": 49.99,
+  "currency": "USD",
+  "description": "Pedido #1234",
+  "merchantName": "Mi tienda"
+}
+""";
+
+HttpRequest request = HttpRequest.newBuilder()
+    .uri(URI.create("https://backend-povy.onrender.com/api/payments"))
+    .header("Content-Type", "application/json")
+    .POST(HttpRequest.BodyPublishers.ofString(json))
+    .build();
+
+HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());
+System.out.println(response.body());</code></pre>
     </section>
 
-    <section class="rounded-xl border border-slate-800 bg-slate-950/70 p-4 space-y-3">
-      <h2 class="text-sm font-semibold">5. Ajustes utiles</h2>
-      <ul class="list-disc list-inside space-y-1 text-[11px] text-slate-400">
-        <li><code>PATCH /api/accounts/:accountNumber</code> con <code>{ "addBalance": 100 }</code> para sumar o restar.</li>
-        <li><code>PATCH /api/accounts/:accountNumber</code> con <code>{ "balance": 500 }</code> para fijar saldo exacto.</li>
-        <li>Monedas soportadas: <code>USD</code>, <code>MXN</code>, <code>JPY</code> y <code>EUR</code>.</li>
-      </ul>
+    <section class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 space-y-4">
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <h2 class="text-base font-semibold">Reembolsos en tu sistema</h2>
+          <p class="text-[11px] text-slate-400">Guarda el <code>transactionId</code> del cobro. Luego lo usas para devolver total o parcial.</p>
+        </div>
+        <button type="button" data-copy-target="docs-code-refund" class="text-[10px] px-2 py-1 rounded-md border border-slate-700 text-slate-200 hover:bg-slate-800">Copiar</button>
+      </div>
+
+      <pre id="docs-code-refund" class="overflow-x-auto rounded-xl border border-slate-800 bg-[#050b14] p-4 text-[11px] text-slate-200"><code>const PovyApi = {
+  baseUrl: 'https://backend-povy.onrender.com'
+};
+
+async function reembolsarConPovy(transactionId, token) {
+  const response = await fetch(`${PovyApi.baseUrl}/api/payments/${transactionId}/refund`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      amount: 10.00
+    })
+  });
+
+  const data = await response.json();
+  console.log(data);
+}</code></pre>
+
+      <div class="grid gap-3 md:grid-cols-3">
+        <div class="rounded-xl border border-slate-800 bg-slate-900/70 p-3">
+          <p class="text-[10px] uppercase tracking-[0.16em] text-slate-500">1. Login</p>
+          <p class="text-[11px] text-slate-300 mt-1">Obt&eacute;n un token iniciando sesi&oacute;n en Povy.</p>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/70 p-3">
+          <p class="text-[10px] uppercase tracking-[0.16em] text-slate-500">2. TransactionId</p>
+          <p class="text-[11px] text-slate-300 mt-1">Guarda el <code>transactionId</code> aprobado del pago original.</p>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/70 p-3">
+          <p class="text-[10px] uppercase tracking-[0.16em] text-slate-500">3. Refund</p>
+          <p class="text-[11px] text-slate-300 mt-1">Llama al endpoint con monto parcial o vac&iacute;o para devolver el total.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="rounded-2xl border border-slate-800 bg-slate-950/70 p-5 space-y-4">
+      <h2 class="text-base font-semibold">Datos del pago Povy</h2>
+      <div class="grid gap-4 lg:grid-cols-2">
+        <div class="rounded-xl border border-slate-800 bg-slate-900/70 p-4 space-y-2">
+          <p class="text-[10px] uppercase tracking-[0.16em] text-slate-500">Request</p>
+          <pre class="overflow-x-auto text-[11px] text-slate-200"><code>{
+  "amount": 49.99,
+  "currency": "USD",
+  "description": "Pedido #1234",
+  "merchantName": "Mi tienda"
+}</code></pre>
+        </div>
+        <div class="rounded-xl border border-slate-800 bg-slate-900/70 p-4 space-y-2">
+          <p class="text-[10px] uppercase tracking-[0.16em] text-slate-500">Response</p>
+          <pre class="overflow-x-auto text-[11px] text-slate-200"><code>{
+  "status": "approved",
+  "transactionId": "POVY-123456789",
+  "message": "Pago simulado correctamente.",
+  "amount": 49.99,
+  "currency": "USD",
+  "description": "Pedido #1234",
+  "merchantName": "Mi tienda"
+}</code></pre>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer class="border-t border-slate-800/80 mt-6">
-    <div class="max-w-5xl mx-auto px-4 py-4 text-[11px] text-slate-500 flex items-center justify-between">
-      <span>Povy Sandbox · Docs actualizadas</span>
+    <div class="max-w-6xl mx-auto px-4 py-4 text-[11px] text-slate-500 flex items-center justify-between">
+      <span>Povy Sandbox · Integración lista para copiar</span>
       <span id="year"></span>
     </div>
   </footer>

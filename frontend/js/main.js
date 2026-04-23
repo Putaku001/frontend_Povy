@@ -149,9 +149,26 @@ function applyAuthUI() {
 
 async function hydrateSession() {
   const token = getAuthToken();
+  const currentUser = getCurrentUser();
+
   if (!token) {
     if (isProtectedPage()) redirectToLogin();
     applyAuthUI();
+    return;
+  }
+
+  // Use cached auth immediately on public pages to avoid blocking the UI on every load.
+  if (currentUser && !isProtectedPage() && !isAuthPage()) {
+    applyAuthUI();
+    fetchJSON(`${API_BASE}/auth/me`)
+      .then((data) => {
+        saveAuth({ token, user: data.user });
+        applyAuthUI();
+      })
+      .catch(() => {
+        clearAuth();
+        applyAuthUI();
+      });
     return;
   }
 
@@ -960,16 +977,42 @@ function bindPaymentsPage() {
   attachCardInputsMasks();
 }
 
+function bindDocsPage() {
+  const langSelect = document.getElementById('docs-language-select');
+  if (!langSelect) return;
+
+  const syncLanguage = () => {
+    const selected = langSelect.value;
+    document.querySelectorAll('[data-docs-language]').forEach((el) => {
+      el.classList.toggle('hidden', el.getAttribute('data-docs-language') !== selected);
+    });
+  };
+
+  langSelect.addEventListener('change', syncLanguage);
+  syncLanguage();
+}
+
 async function init() {
   setYear();
   bindNav();
   bindCopyButtons();
   bindAuthForms();
+  bindDocsPage();
   await hydrateSession();
 
   if (getCurrentUser()) {
-    await loadAccounts();
-    await loadAccountDetail();
+    const needsAccounts =
+      !!document.getElementById('accounts-list') ||
+      !!document.getElementById('saved-card-select') ||
+      !!document.getElementById('home-summary');
+
+    if (needsAccounts) {
+      await loadAccounts();
+    }
+
+    if (document.getElementById('account-detail')) {
+      await loadAccountDetail();
+    }
   }
 
   bindAccountsPage();
